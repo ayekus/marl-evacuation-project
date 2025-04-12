@@ -1,3 +1,8 @@
+Miniconda3-latest-Linux-x86_64.sh
+cuda_12.4.0_550.54.14_linux.run
+/runs
+/checkpoints
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
