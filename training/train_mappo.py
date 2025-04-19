@@ -2,13 +2,9 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-import gymnasium as gym
-import numpy as np
 import torch
-import torch.nn.functional as F
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
-import time
 from environment.evacuation_env import EvacuationEnv
 from mappo_core.actor_critic import ActorCritic
 from mappo_core.mappo_trainer import MAPPOTrainer
@@ -27,7 +23,7 @@ def main():
     n_agents = config.NUM_ROBOTS
 
     # Create single shared network for all agents
-    shared_ac = ActorCritic(obs_shape, n_agents).to(device)
+    shared_ac = ActorCritic(obs_shape).to(device)
     trainer = MAPPOTrainer(shared_ac)
     buffers = {agent_id: RolloutBuffer() for agent_id in range(n_agents)}
 
@@ -76,7 +72,8 @@ def main():
     print("-" * 50)
 
     # Training loop
-    pbar = tqdm(range(start_episode, total_episodes), desc="Training", ncols=150)
+    pbar = tqdm(range(start_episode, total_episodes), desc="Training", dynamic_ncols=True)
+
     for episode in pbar:
         obs, _ = env.reset()
         episode_reward = 0
@@ -166,7 +163,7 @@ def main():
             running_rewards.pop(0)
         avg_reward = sum(running_rewards) / len(running_rewards)
 
-        # Update progress bar with more informative metrics
+        # Update progress bar 
         pbar.set_postfix({
             'last_reward': f'{episode_reward:.1f}',
             'avg_reward': f'{avg_reward:.1f}',

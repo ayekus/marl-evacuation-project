@@ -61,7 +61,7 @@ class MAPPOTrainer:
 
                 ratio = torch.exp(log_probs - old_log_probs[i])
                 surr1 = ratio * advantages[i]
-                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * advantages[i]
+                surr2 = torch.clamp(ratio, 1.0 - config.CLIP_PARAM, 1.0 + config.CLIP_PARAM) * advantages[i]
 
                 policy_loss += -torch.min(surr1, surr2).mean()
                 value_loss += (returns[i] - values).pow(2).mean()
@@ -69,11 +69,11 @@ class MAPPOTrainer:
 
             # Normalize losses by number of agents
             n_agents = len(obs_list)
-            total_loss = (policy_loss + self.vf_coef * value_loss + self.ent_coef * entropy_loss) / n_agents
+            total_loss = (policy_loss + config.VF_COEF * value_loss + config.ENTROPY_COEF * entropy_loss) / n_agents
 
             self.optimizer.zero_grad()
             total_loss.backward()
-            torch.nn.utils.clip_grad_norm_(self.ac.parameters(), self.max_grad_norm)
+            torch.nn.utils.clip_grad_norm_(self.ac.parameters(), config.MAX_GRAD_NORM)
             self.optimizer.step()
 
             # Return loss values for logging

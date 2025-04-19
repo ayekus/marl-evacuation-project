@@ -73,6 +73,12 @@ GAMMA = 0.99                    # Discount factor
 LAMBDA = 0.95                   # GAE parameter
 NUM_WORKERS = 1                 # Parallel workers
 
+# PPO-specific hyperparameters
+CLIP_PARAM = 0.2               # PPO clipping parameter
+VF_COEF = 0.5                  # Value function loss coefficient
+ENTROPY_COEF = 0.01            # Entropy loss coefficient
+MAX_GRAD_NORM = 0.5            # Gradient clipping
+
 ###########################################
 # LOGGING AND CHECKPOINTS
 ###########################################

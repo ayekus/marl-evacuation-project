@@ -45,7 +45,7 @@ class ActorCritic(nn.Module):
         self.actor = nn.Sequential(
             nn.Linear(actor_input_size, hidden_dim),
             nn.ReLU(),
-            nn.Linear(hidden_dim, 4)  # Force output to be 4 actions
+            nn.Linear(hidden_dim, 5)
         )
 
         # Update critic network

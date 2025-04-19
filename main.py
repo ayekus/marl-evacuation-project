@@ -15,7 +15,7 @@ def main():
     n_agents = config.NUM_ROBOTS
 
     # Initialize shared Actor-Critic model
-    shared_ac = ActorCritic(obs_shape, n_agents).to(device)
+    shared_ac = ActorCritic(obs_shape).to(device)
 
     # Load model if checkpoint exists
     checkpoint_path = os.path.join(config.CHECKPOINT_DIR, "latest.pt")

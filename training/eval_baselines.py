@@ -1,9 +1,10 @@
-import numpy as np
-import time
 import sys
 import os
-import pygame
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+import numpy as np
+import time
+import pygame
 from environment.evacuation_env import EvacuationEnv
 from baselines.astar_baseline import AStarBaselineAgent
 from baselines.greedy_baseline import GreedyBaselineAgent

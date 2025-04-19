@@ -7,7 +7,6 @@ import numpy as np
 import time
 from environment.evacuation_env import EvacuationEnv
 from mappo_core.actor_critic import ActorCritic
-from mappo_core.mappo_trainer import MAPPOTrainer
 from utils.visualization import plot_metrics_mappo
 import config
 
@@ -25,7 +24,7 @@ def evaluate_mappo(model_path):
 
     try:
         # Load the trained model
-        shared_ac = ActorCritic(env.one_hot_obs().shape, config.NUM_ROBOTS).to(device)
+        shared_ac = ActorCritic(env.one_hot_obs().shape).to(device)
 
         checkpoint = torch.load(model_path, map_location=device)
         if isinstance(checkpoint, dict):
